@@ -41,6 +41,7 @@
     LIST_ENTRY(recording_loop_enabled, "True if the recording should be rewound at EOF", bool, false) \
     LIST_ENTRY(body_tracking_enabled, "True if body joints should be published as a marker array message", bool, false) \
     LIST_ENTRY(rgb_exposure, "Exposure time of RGB camera: 0 to enable auto exposure.", int, 0) \
+
 class K4AROSDeviceParams
 {
 public:
