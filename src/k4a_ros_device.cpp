@@ -203,7 +203,22 @@ K4AROSDevice::K4AROSDevice(const NodeHandle &n, const NodeHandle &p) : k4a_devic
             version_info.depth_sensor.minor,
             version_info.depth_sensor.iteration);
     }
-    
+
+    if (params_.rgb_exposure) {
+        k4a_device_.set_color_control(
+                                     K4A_COLOR_CONTROL_EXPOSURE_TIME_ABSOLUTE,
+                                     K4A_COLOR_CONTROL_MODE_MANUAL,
+                                     params_.rgb_exposure);
+    }
+    k4a_color_control_mode_t mode;
+    int32_t value;
+    k4a_device_.get_color_control(
+                                 K4A_COLOR_CONTROL_EXPOSURE_TIME_ABSOLUTE,
+                                 &mode,
+                                 &value);
+    ROS_INFO("rgb exposure mode = %s", mode == K4A_COLOR_CONTROL_MODE_AUTO ? "auto" : "manual");
+    ROS_INFO("rgb exposure time = %d (us)", value);
+
     // Register our topics
     rgb_raw_publisher_ = image_transport_.advertise("rgb/image_raw", 1);
     rgb_raw_camerainfo_publisher_ = node_.advertise<CameraInfo>("rgb/camera_info", 1);
